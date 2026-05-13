@@ -22,10 +22,11 @@ class AuthService extends ChangeNotifier {
     required String password,
   }) async {
     final normalizedEmail = email.trim().toLowerCase();
+    final trimmedEmail = email.trim();
 
     try {
       final credential = await _auth.createUserWithEmailAndPassword(
-        email: email.trim(),
+        email: trimmedEmail,
         password: password.trim(),
       );
 
@@ -60,10 +61,11 @@ class AuthService extends ChangeNotifier {
     required String password,
   }) async {
     final normalizedEmail = email.trim().toLowerCase();
+    final trimmedEmail = email.trim();
 
     try {
       final credential = await _auth.signInWithEmailAndPassword(
-        email: normalizedEmail,
+        email: trimmedEmail,
         password: password.trim(),
       );
 

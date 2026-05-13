@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_task_app/services/auth_service.dart';
 import 'package:smart_task_app/widgets/loading_indicator.dart';
+import '../widgets/snackbar.dart';
 
 
 class SignupScreen extends StatefulWidget {
@@ -42,13 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (mounted) {
       setState(() => _isLoading = false);
       if (error != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error),
-            backgroundColor: Colors.red.shade700,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        showErrorSnackBar(context, error);
       } else {
         Navigator.pop(context);
       }
@@ -74,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 const SizedBox(height: 16),
                 Text(
-                  'Join Task Manager',
+                  'Join Smart Task',
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

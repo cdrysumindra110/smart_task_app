@@ -8,6 +8,7 @@ Recommended file names:
 - home.png
 - add-task.png
 - update-task.png
+- delete-task.png
 - completed-task.png
 
 The main project README references `screenshots/home.png`.

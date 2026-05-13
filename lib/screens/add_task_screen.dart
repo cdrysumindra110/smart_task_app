@@ -5,6 +5,7 @@ import 'package:smart_task_app/models/task_model.dart';
 import 'package:smart_task_app/services/auth_service.dart';
 import 'package:smart_task_app/services/firestore_service.dart';
 import 'package:smart_task_app/widgets/loading_indicator.dart';
+import '../widgets/snackbar.dart';
 
 
 class AddTaskScreen extends StatefulWidget {
@@ -90,23 +91,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
       if (mounted) {
         Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(_isEditing ? 'Task updated!' : 'Task added!'),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        showSuccessSnackBar(context, _isEditing ? 'Task updated!' : 'Task added!');
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-            backgroundColor: Colors.red.shade700,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        showErrorSnackBar(context, 'Error: $e');
       }
     }
   }

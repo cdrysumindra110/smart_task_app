@@ -6,6 +6,7 @@ import 'package:smart_task_app/services/auth_service.dart';
 import 'package:smart_task_app/services/firestore_service.dart';
 import 'package:smart_task_app/widgets/quote_card.dart';
 import 'package:smart_task_app/widgets/task_tile.dart';
+import '../widgets/snackbar.dart';
 
 
 
@@ -45,12 +46,12 @@ class _HomeScreenState extends State<HomeScreen>
       _didShowAuthMessage = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(message),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        final lower = message.toLowerCase();
+        if (lower.contains('failed') || lower.contains('error')) {
+          showErrorSnackBar(context, message);
+        } else {
+          showSuccessSnackBar(context, message);
+        }
       });
     }
   }
@@ -88,22 +89,11 @@ class _HomeScreenState extends State<HomeScreen>
       try {
         await _firestoreService.deleteTask(task);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Task deleted'),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          showSuccessSnackBar(context, 'Task deleted');
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Failed to delete task: $e'),
-              backgroundColor: Colors.red.shade700,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          showErrorSnackBar(context, 'Failed to delete task: $e');
         }
       }
     }
@@ -114,13 +104,7 @@ class _HomeScreenState extends State<HomeScreen>
       await _firestoreService.toggleTaskStatus(task);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to update task: $e'),
-            backgroundColor: Colors.red.shade700,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        showErrorSnackBar(context, 'Failed to update task: $e');
       }
     }
   }
