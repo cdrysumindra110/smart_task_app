@@ -96,6 +96,20 @@ flutter devices
 flutter run -d <device-id>
 ```
 
+## Build APK (Release)
+
+### Generate Release APK
+
+```bash
+flutter build apk --release
+```
+
+### APK Output Location
+
+After build completes, your APK will be available at:
+
+`build/app/outputs/flutter-apk/app-release.apk`
+
 ## Test and Analyze
 
 ```bash
